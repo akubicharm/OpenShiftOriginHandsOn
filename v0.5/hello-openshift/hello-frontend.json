@@ -1,0 +1,30 @@
+{
+    "kind": "Config",
+    "apiVersion": "v1beta3",
+    "items": [
+      {
+        "kind":"Service",
+        "id": "frontend",
+        "apiVersion":"v1beta3",
+        "metadata":{
+          "name":"frontend",
+          "labels":{
+            "name":"frontend"
+          }
+        },
+        "spec":{
+          "ports": [
+            {
+              "name":"web",
+              "port":80,
+              "targetPort":8080,
+              "protocol":"TCP"
+            }
+          ],
+          "selector":{
+            "name":"hello-openshift"
+          }
+       }
+     }
+  ]
+}
