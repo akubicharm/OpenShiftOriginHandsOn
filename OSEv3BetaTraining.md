@@ -39,6 +39,9 @@ unzip v0.5.1.zip
 ```
 origin-0.5.1 というディレクトリが作成されていることを確認します。
 
+![OpenShiftOrigin Release](images/github.top.png)
+![OpenShiftOrigin Release](images/github.releases.png)
+
 
 最新版を取得する場合は、以下のコマンドで入手します。
 ```
@@ -165,7 +168,7 @@ __ここまでで準備完了です。__
 ### test-admin ユーザへの権限割り当て
 ```
 [vagrant@openshiftdev ~]$ cd ~ 
-[vagrant@openshiftdev ~]$ osadm policy add-role-to-user view test-admin --config=openshift.local.config/master/admin.kubeconfig
+[vagrant@openshiftdev ~]$ osadm policy add-role-to-user admin test-admin --config=openshift.local.config/master/admin.kubeconfig
 ```
 
 ### 管理コンソールへのアクセス（コマンドライン）
@@ -215,6 +218,9 @@ users:
 ブラウザで https://localhost:8443/console にアクセスします。
 ログイン画面で test-admin でログインします（パスワードはなんでもOK）
 プロジェクト一覧で　「default」 を選択します。
+![login](images/origin_login_with_test-admin-1.png)
+![login](images/origin_login_with_test-admin-2.png)
+![login](images/origin_login_with_test-admin-3.png)
 
 ### Docker Registry の作成
 ~/opensift.local.config/master/openshift-registry.kubeconfig は、openshift コマンドを実行した root ユーザのみ rw の権限を持っているので、すべてのユーザがread可能となるようにファイルのパーミッションを変更します。
@@ -256,40 +262,44 @@ docker-registry を再作成する場合は、pod, service, replicataionControll
 
 ## プロジェクト管理
 ### プロジェクトの作成
-「test」という名前のプロジェクトを作成します。
+「test」という名前のプロジェクトを作成し、確認します。
 ```
-osc new-project test --display-name="OpenShift 3 Sample" --description="This is an example project to demonstrate OpenShift v3"
-```
-
-```
-osc get projects
+[vagrant@openshiftdev ~] $ osc new-project test --display-name="OpenShift 3 Sample" --description="This is an example project to demonstrate OpenShift v3"
+[vagrant@openshiftdev ~] $  osc get projects
 ```
 
 プロジェクトを削除する場合は、以下のコマンドを利用します。
 でも、今はやらないでください。
 ```
-osc delete projects
+[vagrant@openshiftdev ~] $ osc delete projects
 ```
 
 ### 簡単なアプリケーションのデプロイ
 「test」プロジェクトにアプリケーションをデプロイします。
 ```
-[vagrant@openshiftdev ~] $ cd  /data/src/github.com/openshift/origin/examples/hello-openshift
+[vagrant@openshiftdev ~] $ cd /data/src/github.com/openshift/origin/examples/hello-openshift
 [vagrant@openshiftdev hello-openshift]$ osc create -f hello-pod.json  -n test
 [vagrant@openshiftdev hello-openshift]$ curl http://localhost:6061
 ```
 
 ### 複雑なアプリケーションのデプロイ
 ```
-osc process -f application-template-stibuild.json  > ruby.json
-osc create -f ruby.json
+[vagrant@openshiftdev sample-apps] $ osc process -f application-template-stibuild.json  > ruby.json
+[vagrant@openshiftdev sample-apps] $ osc create -f ruby.json
 ```
+
+管理画面では![STIBuildの結果](images/stibuild-result.png)
+
+
 ブラウザで frontend の IP アドレスとポート番号を確認します。例えば、frontend の IP アドレスが 172.30.126.82:5432 の場合、もう一つターミナルを開き、次のコマンドを実行します。
 ```
 vagrant ssh -- -L 9999:172.30.17.4:5432
 ```
 ブラウザで http://localhost:9999 にアクセスします。
 
+
+
+<!--
 ```
 $ docker pull openshift/origin-haproxy-router
 $ sudo chmod +r openshift.local.config/master/openshift-router.kubeconfig
@@ -300,3 +310,4 @@ services/router
 $ osc project default
 $ osc describe dc router
 ```
+-->
