@@ -3,18 +3,20 @@
 
 ## 概要
 
-1. 準備
-- OpenShift Origin v0.5.1 を利用してオールインワンの環境を作成します。
-2.  
+### 作業手順
+
+1. 環境構築
+2. ユーザとプロジェクトの作成
+3. アプリケーションのデプロイ 
 
 
 
-#### 利用するツール
+### 利用するツール
 * vagrant
 * virtualbox
 * git
 
-
+---
 # 準備
 
 * VirtualBox
@@ -43,7 +45,7 @@ origin-0.5.1 というディレクトリが作成されていることを確認�
 git clone https://github.com/openshift/origin.git
 ```
 
-
+---
 # 仮想環境の起動
 ## 環境
 Vagrant で起動する仮想環境は、次のような構成となっています。
@@ -240,7 +242,7 @@ Endpoints:		172.17.0.2:5000
 Session Affinity:	None
 No events.
 ```
-※ Endpoints が <none>  となっている場合は、registry が起動されていません。少し待ってから、再度 osc describe コマンドで Endpoint を確認してください。
+※ Endpoints が `<none>`  となっている場合は、registry が起動されていません。少し待ってから、再度 osc describe コマンドで Endpoint を確認してください。
 
 docker-registry を再作成する場合は、pod, service, replicataionController, buildConfig, deploymentConfig を一度削除してからやり直します。
 `osc get services`、 `osc get pods`、 `osc get bc`、 `osc get rc` で確認後削除します。
@@ -275,12 +277,6 @@ osc delete projects
 [vagrant@openshiftdev ~] $ cd  /data/src/github.com/openshift/origin/examples/hello-openshift
 [vagrant@openshiftdev hello-openshift]$ osc create -f hello-pod.json  -n test
 [vagrant@openshiftdev hello-openshift]$ curl http://localhost:6061
-```
-
-### frontend サービスの追加
-```
-[vagrant@openshiftdev hello-openshift]$ https://raw.githubusercontent.com/akubicharm/OpenShiftOriginHandsOn/master/v0.5/hello-openshift/hello-frontend.json
-
 ```
 
 ### 複雑なアプリケーションのデプロイ
