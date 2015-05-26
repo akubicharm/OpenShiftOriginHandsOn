@@ -115,7 +115,7 @@ tar zxvf openshift-origin-v0.5-cecef65-linux-amd64.tar.gz
 
 ### 環境確認
 #### Docker
-* 設定ファイルの確認
+* 設定ファイルの確認 /etc/sysconfig/docker
 ```
 OPTIONS='--insecure-registry=172.30.0.0/16'
 ```
