@@ -32,12 +32,13 @@ https://git-scm.com/ からダウンロードし、インストールします�
 OpenShift Orign は GitHub <http://github.com/openshift/origin> で公開されています。
 安定版のソースコードどビルド済みのバイナリは releases <https://github.com/openshift/origin/releases> から取得可能です。
 
-OpenShift Origin v0.5.1(beta3)のソースコードのアーカイブを GitHub から入手します。
+OpenShift Origin v0.5.x(beta3)のソースコードのアーカイブを GitHub から入手します。
+2015年6月1日現在、v0.5.3 で動作確認済みです。
 ```
-wget https://github.com/openshift/origin/archive/v0.5.1.zip
-unzip v0.5.1.zip
+wget https://github.com/openshift/origin/archive/v0.5.x.zip
+unzip v0.5.x.zip
 ```
-origin-0.5.1 というディレクトリが作成されていることを確認します。
+origin-0.5.x というディレクトリが作成されていることを確認します。
 
 ![OpenShiftOrigin Release](images/github.top.png)
 ![OpenShiftOrigin Release](images/github.releases.png)
