@@ -284,6 +284,7 @@ docker-registry を再作成する場合は、pod, service, replicataionControll
 
 ### 複雑なアプリケーションのデプロイ
 ```
+[vagrant@openshiftdev sample-app]$ cd /data/src/github.com/openshift/origin/examples/sample-app
 [vagrant@openshiftdev sample-apps] $ osc process -f application-template-stibuild.json  > ruby.json
 [vagrant@openshiftdev sample-apps] $ osc create -f ruby.json
 ```
