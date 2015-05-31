@@ -257,7 +257,7 @@ docker-registry を再作成する場合は、pod, service, replicataionControll
 [vagrant@openshiftdev ~]$ curl `osc get service docker-registry --template="{{ .spec.portalIP }}:{{ with index .spec.ports 0 }}{{ .port }}{{ end }}" --config=openshift.local.config/master/admin.kubeconfig`
 "docker-registry server (dev) (v0.9.0)"
 ```
-
+※ 404 Page Not Found となりますが、docker-registry は正常に動作しているようです。。。
 
 
 ## プロジェクト管理
@@ -287,6 +287,45 @@ docker-registry を再作成する場合は、pod, service, replicataionControll
 [vagrant@openshiftdev sample-app]$ cd /data/src/github.com/openshift/origin/examples/sample-app
 [vagrant@openshiftdev sample-apps] $ osc process -f application-template-stibuild.json  > ruby.json
 [vagrant@openshiftdev sample-apps] $ osc create -f ruby.json
+```
+ビルドの状態は、`osc get builds` で確認できます。pollingで確認数場合は--watch オプションを利用します。
+```
+[vagrant@openshiftdev sample-app]$ osc get builds --watch
+NAME                  TYPE      STATUS    POD
+ruby-sample-build-1   Source    Pending   ruby-sample-build-1
+NAME                  TYPE      STATUS    POD
+```
+
+ビルドのログは `osc build-logs ruby-sample-build-1` で確認できます。
+```
+[vagrant@openshiftdev sample-app]$ osc build-logs ruby-sample-build-1 
+I0531 17:18:30.280040       1 sti.go:392] ---> Installing application source
+I0531 17:18:30.291989       1 sti.go:392] ---> Building your Ruby application from source
+I0531 17:18:30.292022       1 sti.go:392] ---> Running 'bundle install --deployment'
+I0531 17:18:34.532721       1 sti.go:392] Fetching gem metadata from https://rubygems.org/..........
+I0531 17:18:36.452446       1 sti.go:392] Installing rake (10.3.2) 
+I0531 17:18:36.655133       1 sti.go:392] Installing i18n (0.6.11) 
+I0531 17:18:38.147289       1 sti.go:392] Installing json (1.8.1) 
+I0531 17:18:38.367357       1 sti.go:392] Installing minitest (5.4.2) 
+I0531 17:18:38.647045       1 sti.go:392] Installing thread_safe (0.3.4) 
+I0531 17:18:38.937859       1 sti.go:392] Installing tzinfo (1.2.2) 
+I0531 17:18:39.300163       1 sti.go:392] Installing activesupport (4.1.7) 
+I0531 17:18:39.469672       1 sti.go:392] Installing builder (3.2.2) 
+I0531 17:18:39.669629       1 sti.go:392] Installing activemodel (4.1.7) 
+I0531 17:18:39.881080       1 sti.go:392] Installing arel (5.0.1.20140414130214) 
+I0531 17:18:40.229913       1 sti.go:392] Installing activerecord (4.1.7) 
+I0531 17:18:42.932239       1 sti.go:392] Installing mysql2 (0.3.16) 
+I0531 17:18:43.673486       1 sti.go:392] Installing rack (1.5.2) 
+I0531 17:18:43.841714       1 sti.go:392] Installing rack-protection (1.5.3) 
+I0531 17:18:44.045783       1 sti.go:392] Installing tilt (1.4.1) 
+I0531 17:18:44.402413       1 sti.go:392] Installing sinatra (1.4.5) 
+I0531 17:18:44.888498       1 sti.go:392] Installing sinatra-activerecord (2.0.3) 
+I0531 17:18:44.891529       1 sti.go:392] Using bundler (1.3.5) 
+I0531 17:18:44.894559       1 sti.go:392] Your bundle is complete!
+I0531 17:18:44.894742       1 sti.go:392] It was installed into ./bundle
+I0531 17:18:44.924633       1 sti.go:392] ---> Cleaning up unused ruby gems
+I0531 17:18:51.404719       1 sti.go:92] Pushing 172.30.204.63:5000/test/origin-ruby-sample:latest image ...
+I0531 17:20:08.301894       1 sti.go:97] Successfully pushed 172.30.204.63:5000/test/origin-ruby-sample:latest
 ```
 
 管理画面では![STIBuildの結果](images/stibuild-result.png)
