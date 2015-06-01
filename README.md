@@ -1,4 +1,4 @@
 # OpenShiftOriginHandsOn
 OpenShift Origin のクイックスタート用コンテンツです。
 
-[手順](OSEv3BetaTraining.md  "OSEv3BetaTraining")をみてください。
+手順は[OSEv3BetaTraining](OSEv3BetaTraining.md  "OSEv3BetaTraining")をみてください。
